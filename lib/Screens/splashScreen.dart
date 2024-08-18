@@ -13,12 +13,21 @@ class _SplashscreenState extends State<Splashscreen> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        leading: Text("Ecommerce"),
+        leading: const Text("Ecommerce"),
       ),
       backgroundColor: Colors.white,
       body: Container(
         child: Column(
-          children: [Text("Welcome to Ecommerce _applicaton")],
+          children: [
+            const Text(
+              "Welcome to Ecommerce _applicaton",
+              style: TextStyle(
+                fontSize: 24,
+                height: 120,
+                backgroundColor: Colors.orange,
+              ),
+            )
+          ],
         ),
       ),
     ));

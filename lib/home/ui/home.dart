@@ -14,6 +14,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         title: Text("Grocery App"),
+        leading: Icon(Icons.insert_emoticon_sharp),
       ),
     );
   }

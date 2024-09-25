@@ -14,6 +14,9 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         title: Text("Cart Page"),
       ),
+      body: Container(
+        child: Column(),
+      ),
     );
   }
 }

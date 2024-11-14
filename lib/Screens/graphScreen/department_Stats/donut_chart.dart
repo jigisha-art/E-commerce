@@ -22,7 +22,7 @@ class DonutChart extends StatelessWidget {
   List<PieChartSectionData> _getSections() {
     return [
       PieChartSectionData(
-        color: Colors.purple,
+        color: Colors.pinkAccent,
         value: 15,
         title: '15',
         radius: 50,
@@ -33,7 +33,7 @@ class DonutChart extends StatelessWidget {
         ),
       ),
       PieChartSectionData(
-        color: Colors.black,
+        color: Colors.black87,
         value: 25,
         title: '25',
         radius: 50,
@@ -44,7 +44,7 @@ class DonutChart extends StatelessWidget {
         ),
       ),
       PieChartSectionData(
-        color: Colors.orange,
+        color: Colors.green,
         value: 60,
         title: '60',
         radius: 50,

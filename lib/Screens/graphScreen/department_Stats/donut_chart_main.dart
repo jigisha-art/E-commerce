@@ -11,7 +11,7 @@ class donutcard_main extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            "Department Statistics",
+            "Selling Data",
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,

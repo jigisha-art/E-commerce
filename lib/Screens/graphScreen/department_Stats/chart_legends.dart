@@ -5,9 +5,9 @@ class ChartLegend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildLegendItem(Colors.purple, "Operations"),
-        _buildLegendItem(Colors.black, "Sales"),
-        _buildLegendItem(Colors.orange, "Marketing"),
+        _buildLegendItem(Colors.green, "Grocery"),
+        _buildLegendItem(Colors.pinkAccent, "Cosmetic"),
+        _buildLegendItem(Colors.black87, "Electronic"),
       ],
     );
   }

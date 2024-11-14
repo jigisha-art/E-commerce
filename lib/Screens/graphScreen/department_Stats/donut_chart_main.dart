@@ -26,7 +26,7 @@ class donutcard_main extends StatelessWidget {
               children: [
                 const SizedBox(width: 20), // Adding some space between the chart and legend
                 Expanded(child: DonutChart()), // Donut chart on the left
-                const SizedBox(width: 20), // Adding some space between the chart and legend
+                const SizedBox(width: 20), // Adding some space between the chart
                 Expanded(child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ChartLegend(),

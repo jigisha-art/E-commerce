@@ -21,12 +21,12 @@ class donutcard_main extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Center the Row
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(width: 20), // Adding some space between the chart and legend
-                Expanded(child: DonutChart()), // Donut chart on the left
-                const SizedBox(width: 20), // Adding some space between the chart
+                const SizedBox(width: 20),
+                Expanded(child: DonutChart()),
+                const SizedBox(width: 20),
                 Expanded(child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ChartLegend(),

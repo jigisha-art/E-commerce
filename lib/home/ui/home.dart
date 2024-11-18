@@ -23,6 +23,9 @@ class _HomeState extends State<Home> {
           style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
         ),
         leading: Icon(Icons.insert_emoticon_sharp),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.notifications_active))
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

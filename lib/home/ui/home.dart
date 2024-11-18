@@ -24,7 +24,8 @@ class _HomeState extends State<Home> {
         ),
         leading: Icon(Icons.insert_emoticon_sharp),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.notifications_active))
+          IconButton(onPressed: (){}, icon: Icon(Icons.notifications_active,
+          color: Colors.blueAccent,))
         ],
       ),
       body: Column(

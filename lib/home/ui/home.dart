@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
           SizedBox(height: 50,),
           Container(
               margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.41,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,

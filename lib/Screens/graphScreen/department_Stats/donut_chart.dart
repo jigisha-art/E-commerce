@@ -23,8 +23,8 @@ class DonutChart extends StatelessWidget {
     return [
       PieChartSectionData(
         color: Colors.pinkAccent,
-        value: 15,
-        title: '11',
+        value: 14,
+        title: '12',
         radius: 50,
         titleStyle: const TextStyle(
           fontSize: 18,

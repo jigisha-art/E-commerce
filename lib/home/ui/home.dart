@@ -22,12 +22,41 @@ class _HomeState extends State<Home> {
           "Grocery Application",
           style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
         ),
-        leading: Icon(Icons.insert_emoticon_sharp),
+        // leading: Icon(Icons.insert_emoticon_sharp),
         actions: [
           IconButton(onPressed: (){}, icon: Icon(Icons.notifications_active,
           color: Colors.blueAccent,))
         ],
       ),
+      drawer:Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
+
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

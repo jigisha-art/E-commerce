@@ -56,7 +56,6 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

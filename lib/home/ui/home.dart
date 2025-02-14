@@ -1,87 +1,150 @@
-import 'package:e_commerceapplication/Screens/graphScreen/department_Stats/donut_chart_main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cart/bloc/cart_bloc.dart';
+import '../../cart/bloc/cart_event.dart';
+import '../../cart/ui/cart_page.dart';
+import '../../product/bloc/product_bloc.dart';
+import '../../product/models/product_model.dart';
+import '../../product/repositories/product_repository.dart';
+// /*
+// import '../product/bloc/product_bloc.dart';
+// import '../product/models/product_model.dart';
+// import '../product/repositories/product_repository.dart';
+// import '../cart/bloc/cart_bloc.dart';
+// import '../cart/ui/cart_page.dart';
+// */
 
-class Home extends StatefulWidget {
-  const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  dynamic height,width;
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: Text(
-          "Grocery Application",
-          style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProductBloc(
+            productRepository: ProductRepository(),
+          )..add(LoadProductsEvent()),
         ),
-        // leading: Icon(Icons.insert_emoticon_sharp),
-        actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.notifications_active,
-          color: Colors.blueAccent,))
-        ],
-      ),
-      drawer:Drawer(
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
+        BlocProvider(
+          create: (context) => CartBloc(),
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('E-Commerce Store'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage()),
+                );
               },
             ),
           ],
         ),
+        body: BlocBuilder<ProductBloc, ProductState>(
+          builder: (context, state) {
+            if (state is ProductLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            }
+            
+            if (state is ProductErrorState) {
+              return Center(child: Text(state.error));
+            }
+            
+            if (state is ProductLoadedState) {
+              return GridView.builder(
+                padding: EdgeInsets.all(10),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.7,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: state.products.length,
+                itemBuilder: (context, index) {
+                  final product = state.products[index];
+                  return ProductCard(product: product);
+                },
+              );
+            }
+            
+            return Center(child: Text('No products found'));
+          },
+        ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+    );
+  }
+}
+
+class ProductCard extends StatelessWidget {
+  final ProductModel product;
+
+  const ProductCard({Key? key, required this.product}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 50,),
-          Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-              height: MediaQuery.of(context).size.height * 0.41,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey, // Grey color for shadow
-                    blurRadius: 5.0,    // Softens the shadow
-                    spreadRadius: 1.0,  // Extends the shadow
-                    offset: Offset(0, 2), // Moves shadow right and down
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(8.0), // Optional: Rounded corners
+          Expanded(
+            child: Center(
+              child: Image.network(
+                product.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.image_not_supported);
+                },
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: donutcard_main(),
-              )
-          )
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '\$${product.price.toStringAsFixed(2)}',
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    // Add to cart
+                    context.read<CartBloc>().add(
+                      AddToCartEvent(product.toCartItem())
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${product.name} added to cart'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                  child: Text('Add to Cart'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 40),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
